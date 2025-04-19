@@ -1,4 +1,5 @@
 import './App.css'
+import NavBar from './components/NavBar/NavBar';
 import Mainroutes from './routes/Mainroutes';
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
 
   return (
     <>
-      <div>nav bar here</div>
+      <NavBar />
       <Mainroutes />
     </>
   )
