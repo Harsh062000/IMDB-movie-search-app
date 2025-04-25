@@ -1,14 +1,28 @@
+import { useEffect, useState } from 'react';
+import { searchMovie } from '../apis/omdb';
+import axios from 'axios';
+
+// components import
 import MovieCard from '../components/MovieCard/MovieCard';
 import './Home.css';
 
 function Home() {
 
-       const Movie = {
-              "Title": "Harry Doright's Prelude to Hell",
-              "Year": "2008",
-              "Type": "movie",
-              "Poster": "https://m.media-amazon.com/images/M/MV5BZGUyNzU0OTgtZTM0NS00MWY0LWJhZjAtYzM5ZmZlY2IwNzhlXkEyXkFqcGdeQXVyNDU4ODIyNjU@._V1_SX300.jpg"
+       const [movieList, setMovieList] = useState([]);
+
+       async function downloadDefaultMovies(...args) {
+
+              const urls = args.map((name) => searchMovie(name));
+              const response = await axios.all((urls.map(url => axios.get(url))));
+              const movies = await response.map((movieResponse) => movieResponse.data.Search);
+              console.log(movies);
+              setMovieList([].concat(...movies));
        }
+
+       useEffect(() => {
+              downloadDefaultMovies('harry', 'avengers');
+       }, []);
+
        return (
               <>
                      {/* navbar */}
@@ -16,15 +30,14 @@ function Home() {
                      {/* pagination buttons */}
 
                      <div className='movie-card-wrapper'>
-                            <MovieCard
-                                   {...Movie}
-                            />
-                            <MovieCard
-                                   {...Movie}
-                            />
-                            <MovieCard
-                                   {...Movie}
-                            />
+                            {movieList.length > 0 && movieList.map((movie) => {
+                                   return (
+                                          <MovieCard
+                                                 key={movie.imdebId}
+                                                 {...movie}
+                                          />
+                                   )
+                            })}
                      </div>
 
               </>
