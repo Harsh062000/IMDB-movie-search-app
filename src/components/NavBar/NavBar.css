@@ -26,3 +26,25 @@
        border-radius: 8px;
        color: white;
 }
+
+.search-bar {
+       position: relative;
+}
+
+#result-list {
+       /* display: none; */
+       position: absolute;
+       background-color: whitesmoke;
+       color: black;
+       width: 100%;
+       border-bottom-right-radius: 8px;
+       border-bottom-left-radius: 8px;
+}
+
+#result-list>.autocomplete-result {
+       font-size: large;
+       letter-spacing: 0;
+       margin-bottom: 1rem;
+       padding: 1rem;
+       border-bottom: 1px solid black;
+}
